@@ -1,5 +1,7 @@
 Meet App Features and User Stories
+
 Feature 1: Filter events by city.
+
 Scenario 1: When user hasn’t searched for a city, show upcoming events from all cities.
 Given user hasn’t searched for any city
 When the user opens the app
@@ -15,7 +17,10 @@ Given the user was typing „Berlin“ in the city textbox and the list of sugge
 When the user selects a city (e.g., „Berlin, Germany“) from the list
 Then their city should be changed to that city (i.e., „Berlin, Germany“) and the user should receive a list of upcoming events in that city
 
+
+
 Feature 2: Show/Hide an event’s details
+
 Scenario 1: An event element is collapsed.
 Given user hasn’t searched for any city or has searched for a city
 When the user opens the app or selects a city
@@ -31,7 +36,10 @@ Given user got the wanted information
 When user clicks on a button or outside the event element
 Then the event element should collapse
 
+
+
 Feature 3: Specify number of events
+
 Scenario 1: When user hasn’t specified a number, 32 is the default number.
 Given user opened the app or selected a city
 When the user does not specify the number of shown events
@@ -41,7 +49,11 @@ Scenario 2: User can change the number of events they want to see.
 Given user opened the app or selected a city
 When the user does specify the number of shown events
 Then a list of events with the specified number should be returned to the user
+
+
+
 Feature 4: Use the app when offline
+
 Scenario 1: Show cached data when there’s no internet connection.
 Given user had no internet connection
 When the user opens the app
@@ -52,7 +64,10 @@ Given user had no internet connection
 When user tries to change the settings
 Then an error message should occur on the screen of the user
 
+
+
 Feature 5: Data visualization
+
 Scenario 1: Show a chart with the number of upcoming events in each city.
 Given user had interest in the upcoming events of a city
 When the user clicks on a time button
