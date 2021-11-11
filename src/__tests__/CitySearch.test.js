@@ -8,8 +8,8 @@ describe('<CitySearch /> component', () => {
 
     let CitySearchWrapper, locations;
     beforeAll(() =>{
-        const locations = extractLocations(mockData);
-        CitySearchWrapper = shallow(<CitySearch />);
+        locations = extractLocations(mockData);
+        CitySearchWrapper = shallow(<CitySearch locations={locations} />);
     });
 
 
@@ -38,9 +38,9 @@ describe('<CitySearch /> component', () => {
     test('render list of suggestions correctly', () => {
         CitySearchWrapper.setState({ suggestions: locations });
         const suggestions = CitySearchWrapper.state('suggestions');
-        expect(CitySearchWrapper.find('.suggestion li')).toHaveLength(suggestions.length + 1);
+        expect(CitySearchWrapper.find('.suggestions li')).toHaveLength(suggestions.length + 1);
         for (let i = 0; i < suggestions.length; i += 1) {
-            expect(CitySearchWrapper.find('.suggestion li').at(i).text()).toBe(suggestion[i]);
+            expect(CitySearchWrapper.find('.suggestions li').at(i).text()).toBe(suggestions[i]);
         }
     });
 
