@@ -21,6 +21,10 @@ describe('<App /> component', () => {
     test('render CitySearch', () => {
         expect(AppWrapper.find(CitySearch)).toHaveLength(1);
     });
+
+    test('render NumberOfEvents', () =>{
+        expect(AppWrapper.find(NumberOfEvents)).toHaveLength(1);
+    })
     
 });
 
@@ -69,12 +73,11 @@ describe('<App /> integration', () => {
         AppWrapper.unmount();
     });
 
-    test('pass NumberOfEvents state to', () => {
+    test('pass NumberOfEvents state to 32', () => {
         const AppWrapper = mount(<App />);
         const AppNumberOfEventsState = AppWrapper.state('numberOfEvents');
         expect(AppNumberOfEventsState).not.toEqual(undefined);
         expect(AppWrapper.find(NumberOfEvents).props().numberOfEvents).toEqual(32);
         AppWrapper.unmount();
     });
-
 });
