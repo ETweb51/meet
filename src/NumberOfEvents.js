@@ -13,8 +13,7 @@ class NumberOfEvents extends Component {
     } else {
       this.setState({ 
         numberOfEvents: number,
-        });
-        this.props.updateNumberOfEvents(event.target.value);
+      });
     }
   };
 
@@ -23,7 +22,7 @@ class NumberOfEvents extends Component {
       <div>
         <p>Change number of shown events between 1-32</p>
         
-        <input type="number" id="numberInput" value={this.state.numberOfEvents} className="numberInput" onChange={(e) => this.handleInputChanged(e)} />
+        <input type="number" value={this.state.numberOfEvents} className="newValue" onChange={(e) => this.handleInputChanged(e)} />
       </div>
     );
   }
