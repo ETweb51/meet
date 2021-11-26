@@ -4,7 +4,6 @@ const calendar = google.calendar("v3");
 
 const SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 
-
 const credentials = {
   client_id: process.env.CLIENT_ID,
   project_id: process.env.PROJECT_ID,
@@ -16,7 +15,9 @@ const credentials = {
   redirect_uris: ["https://etweb51.github.io/meet/"],
   javascript_origins: ["https://etweb51.github.io", "http://localhost:3000"],
 };
+
 const { client_secret, client_id, redirect_uris, calendar_id } = credentials;
+
 const oAuth2Client = new google.auth.OAuth2(
   client_id,
   client_secret,
@@ -24,7 +25,6 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 
 module.exports.getAuthURL = async () => {
-
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: "offline",
     scope: SCOPES,
@@ -33,7 +33,7 @@ module.exports.getAuthURL = async () => {
   return {
     statusCode: 200,
     headers: {
-      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Origin": "*"
     },
     body: JSON.stringify({
       authUrl: authUrl,
@@ -42,17 +42,15 @@ module.exports.getAuthURL = async () => {
 };
 
 module.exports.getAccessToken = async (event) => {
-  // The values used to instantiate the OAuthClient are at the top of the file
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
     client_secret,
     redirect_uris[0]
   );
-    // Decode authorization code extracted from the URL query
+
   const code = decodeURIComponent(`${event.pathParameters.code}`);
   
   return new Promise((resolve, reject) => {
-  
     oAuth2Client.getToken(code, (err, token) => {
       if (err) {
         return reject(err);
@@ -60,25 +58,24 @@ module.exports.getAccessToken = async (event) => {
       return resolve(token);
     });
   })
-  .then((token) => {
-    // Respond with OAuth token 
+  .then((token) => { 
     return {
       statusCode: 200,
       headers: {
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": "*"
       },
       body: JSON.stringify(token),
     };
   })
   .catch((err) => {
-    // Handle error
     console.error(err);
     return {
       statusCode: 500,
-      body: JSON.stringify(err),
+    body: JSON.stringify(err),
     };
   });
 };
+
 
 module.exports.getCalendarEvents = async (event) => {
   const oAuth2Client = new google.auth.OAuth2(
@@ -87,11 +84,7 @@ module.exports.getCalendarEvents = async (event) => {
     redirect_uris[0]
   );
 
-  const access_token = decodeURIComponent(
-    `${event.pathParameters.access_token}`
-  );
-
-
+  const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
   oAuth2Client.setCredentials({ access_token });
 
   return new Promise((resolve, reject) => {
@@ -100,7 +93,6 @@ module.exports.getCalendarEvents = async (event) => {
         calendarId: calendar_id,
         auth: oAuth2Client,
         timeMin: new Date().toISOString(),
-        maxResults: max_results,
         singleEvents: true,
         orderBy: "startTime",
       },
@@ -117,20 +109,16 @@ module.exports.getCalendarEvents = async (event) => {
     return {
       statusCode: 200,
       headers: {
-        "Access-Control-Allow-Origin": "*",
-        ...results.config.headers,
+        "Access-Control-Allow-Origin": "*"
       },
       body: JSON.stringify({ events: results.data.items }),
     };
   })
-  .catch((error) => {
-    console.error("Error adding event: " + error);
+  .catch((err) => {
+    console.log(err);
     return {
-      statusCode: 401,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify(error.message),
+      statusCode: 500,
+      body: JSON.stringify(err),
     };
   });
 };
