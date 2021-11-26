@@ -14,10 +14,10 @@ class App extends Component {
     numberOfEvents: 32
   }
 
-  updateEvents = (location, eventCount) => {
+  updateEvents = (location) => {
     getEvents().then((events) => {
       const locationEvents = (location === 'all') ? events : events.filter((event) => event.location === location);
-      const shownEvents = locationEvents.slice(0, eventCount);
+      const shownEvents = locationEvents.slice(0, this.state.numberOfEvents);
       this.setState({
         events: shownEvents,
         currentLocation: location
@@ -25,17 +25,12 @@ class App extends Component {
     });
   }
   
-  updateNumberofEvents = (eventCount) => {
-    const newNum = parseInt(eventCount.target.value);
-
-    if (newNum < 1 || newNum > 32) {
-      return window.alert('Choose number between 1-3');
-    } else {
-      this.setState({
-        numberOfEvents: newNum
-      });
-      this.updateEvents(this.state.currentLocation, this.state.numberOfEvents);
-    }
+  updateNumberofEvents = (number) => {
+    const newNum = number;
+    this.setState({
+      numberOfEvents: newNum
+    });
+    this.updateEvents(this.state.currentLocation);
   };
 
   componentDidMount() {
