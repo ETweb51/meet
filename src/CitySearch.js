@@ -42,7 +42,6 @@ class CitySearch extends Component {
     render() {
         return (
             <div className="CitySearch">
-                <h1>Meet App</h1>
                 <InfoAlert text={this.state.infoText} />
                 <input type="text" className="city" placeholder="Search for city" value={this.state.query} onChange={this.handleInputChanged} onFocus={() => { this.setState({ showSuggestions: true }) }} />
                 <ul className="suggestions" style={this.state.showSuggestions ? {}: { display: 'none'}}>
